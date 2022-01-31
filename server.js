@@ -23,7 +23,7 @@ app.get("/api/notes", (req, res) => {
   res.json("/db/db.json");
 });
 
-// POST Notes
+// POST Notes (DO I NEED TO PARSE SOMETHING????)
 app.post("/api/notes", (req, res) => {
   const { id, title, text } = req.body;
 
@@ -33,8 +33,8 @@ app.post("/api/notes", (req, res) => {
       title,
       text,
     };
-
-    db.push(newNote);
+    
+    db.push(parse(newNote));
 
     fs.writeFile("./db/db.json", JSON.stringify(db), (err) =>
       err

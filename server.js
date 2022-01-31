@@ -20,7 +20,7 @@ app.get("/notes", (req, res) =>
 
 // GET Notes res.json from db
 app.get("/api/notes", (req, res) => {
-  res.json("/db/db.json");
+  res.json("./db/db.json");
 });
 
 // POST Notes (DO I NEED TO PARSE SOMETHING????)
@@ -33,8 +33,8 @@ app.post("/api/notes", (req, res) => {
       title,
       text,
     };
-    
-    db.push(parse(newNote));
+
+    db.push(newNote);
 
     fs.writeFile("./db/db.json", JSON.stringify(db), (err) =>
       err

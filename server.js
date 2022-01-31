@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const uuid = require("uuid");
-var db = require("./db/db.json");
+let db = require("./db/db.json");
 
 const PORT = process.env.PORT || 3001;
 
@@ -13,17 +13,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+// GET Notes res.json from db
+app.get("/api/notes", (req, res) => {
+    res.json(db);
+  });
+  
 // GET Notes route
 app.get("/notes", (req, res) =>
   res.sendFile(path.join(__dirname, "/public/notes.html"))
 );
 
-// GET Notes res.json from db
-app.get("/api/notes", (req, res) => {
-  res.json("./db/db.json");
-});
+// else GET Index, should go last
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "/public/index.html"))
+);
 
-// POST Notes (DO I NEED TO PARSE SOMETHING????)
+// POST Notes
 app.post("/api/notes", (req, res) => {
   const { id, title, text } = req.body;
 
@@ -49,10 +54,5 @@ app.post("/api/notes", (req, res) => {
     res.error("Error in adding new note...");
   }
 });
-
-// else GET Index, should go last
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "/public/index.html"))
-);
 
 app.listen(PORT, () => console.log(`App listening at PORT: ${PORT} 🚀`));

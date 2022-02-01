@@ -13,17 +13,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// GET Notes res.json from db
+// GET Notes res.json
 app.get("/api/notes", (req, res) => {
     res.json(db);
   });
-  
+
 // GET Notes route
 app.get("/notes", (req, res) =>
   res.sendFile(path.join(__dirname, "/public/notes.html"))
 );
 
-// else GET Index, should go last
+// else GET Index
 app.get("*", (req, res) =>
   res.sendFile(path.join(__dirname, "/public/index.html"))
 );
